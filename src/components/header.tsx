@@ -1,5 +1,6 @@
 "use client";
 
+import Cookies from "js-cookie";
 import { Menu, Moon, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -20,11 +21,16 @@ export function Header() {
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
+    const stored = Cookies.get("theme");
     const isDarkMode =
       stored === "dark" ||
       (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
     setIsDark(isDarkMode);
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -36,7 +42,7 @@ export function Header() {
     } else {
       document.documentElement.classList.remove("dark");
     }
-    localStorage.setItem("theme", theme);
+    Cookies.set("theme", theme, { path: "/", expires: 365 });
   };
 
   return (
