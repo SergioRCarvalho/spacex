@@ -1,19 +1,14 @@
 const messages = {
   HomePage: {
-    title: "Get started by editing",
-    lead: "To get started, edit the page.tsx file.",
-    description:
-      "Looking for a starting point or more instructions? Head over to",
-    templates: "Templates",
-    or: "or the",
-    learning: "Learning",
-    center: "center.",
-    deployNow: "Deploy Now",
-    documentation: "Documentation",
+    heroTitle: "SpaceX Launches Portal",
+    heroDescription:
+      "Explore the history of SpaceX missions and launches. Discover the details of each mission that is revolutionizing space travel.",
+    totalLaunches: "TOTAL LAUNCHES",
+    viewLaunches: "View Launches",
   },
   Layout: {
-    title: "SpaceX - Making life multiplanetary",
-    description: "SpaceX application built with Next.js",
+    title: "SpaceX Launches Portal",
+    description: "Portal for SpaceX launches built with Next.js",
   },
 };
 
