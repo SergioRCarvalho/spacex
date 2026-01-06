@@ -18,6 +18,7 @@ const messages = {
     success: "Sucesso",
     failure: "Falha",
     unknown: "Desconhecido",
+    searchPlaceholder: "Pesquisar lançamentos...",
   },
   Header: {
     toggleTheme: "Alternar tema",
@@ -33,6 +34,7 @@ const messages = {
   FavoritesPage: {
     title: "Favoritos",
     noFavorites: "Nenhum lançamento favorito ainda.",
+    searchPlaceholder: "Pesquisar favoritos...",
   },
 };
 
