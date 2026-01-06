@@ -1,7 +1,6 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Header } from "@/components/header";
 import { LaunchCard } from "@/components/launch-card";
@@ -30,7 +29,6 @@ interface GetLaunchesData {
 }
 
 export default function LaunchesPage() {
-  const t = useTranslations("LaunchesPage");
   const [launches, setLaunches] = useState<Launch[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);

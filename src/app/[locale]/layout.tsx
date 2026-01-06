@@ -48,29 +48,9 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang={locale} className={theme === "dark" ? "dark" : ""} suppressHydrationWarning>
+    <html lang={locale} className={theme === "dark" ? "dark" : ""}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const Cookies = {
-                  get: (name) => {
-                    const value = "; " + document.cookie;
-                    const parts = value.split("; " + name + "=");
-                    if (parts.length === 2) return parts.pop().split(";").shift();
-                  }
-                };
-                const stored = Cookies.get("theme");
-                const isDark = stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
-                if (isDark) {
-                  document.documentElement.classList.add("dark");
-                }
-              } catch (e) {}
-            `,
-          }}
-        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

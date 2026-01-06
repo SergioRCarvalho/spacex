@@ -28,8 +28,8 @@ export function LaunchCard({ launch }: LaunchCardProps) {
   const tCard = useTranslations("LaunchCard");
   const [expanded, setExpanded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    if (typeof window !== "undefined") {
+      const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
       return favorites.some((fav: Launch) => fav.id === launch.id);
     }
     return false;
@@ -47,7 +47,7 @@ export function LaunchCard({ launch }: LaunchCardProps) {
     const newIsFavorite = !isFavorite;
     setIsFavorite(newIsFavorite);
 
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
     if (newIsFavorite) {
       if (!favorites.some((fav: Launch) => fav.id === launch.id)) {
         favorites.push(launch);
@@ -56,8 +56,8 @@ export function LaunchCard({ launch }: LaunchCardProps) {
       const index = favorites.findIndex((fav: Launch) => fav.id === launch.id);
       if (index > -1) favorites.splice(index, 1);
     }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    window.dispatchEvent(new CustomEvent('favoritesChanged'));
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    window.dispatchEvent(new CustomEvent("favoritesChanged"));
 
     setTimeout(() => setAnimating(false), 600);
   };
@@ -80,12 +80,12 @@ export function LaunchCard({ launch }: LaunchCardProps) {
           </p>
         </div>
         <button
-          className={`p-0 hover:scale-110 transition-transform relative cursor-pointer ${animating ? 'animate-ping' : ''}`}
+          className={`p-0 hover:scale-110 transition-transform relative cursor-pointer ${animating ? "animate-ping" : ""}`}
           onClick={handleToggleFavorite}
           type="button"
         >
           <Heart
-            className={`w-6 h-6 ${isFavorite ? 'fill-[#e53939] stroke-[#e53939]' : 'stroke-[#7f7f7f] dark:stroke-[#7f7f7f]'}`}
+            className={`w-6 h-6 ${isFavorite ? "fill-[#e53939] stroke-[#e53939]" : "stroke-[#7f7f7f] dark:stroke-[#7f7f7f]"}`}
           />
         </button>
       </div>
