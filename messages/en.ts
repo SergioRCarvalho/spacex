@@ -25,6 +25,10 @@ const messages = {
     home: "Home",
     launches: "Launches",
   },
+  LaunchCard: {
+    more: "More",
+    less: "Less",
+  },
 };
 
 export default messages;

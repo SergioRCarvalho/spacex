@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { ChevronDown} from "lucide-react";
 import { useTranslations } from "next-intl";
-import { ChevronDown, ChevronUp, ExternalLink, Youtube } from "lucide-react";
-import { Button } from "./ui/button";
+import { useState } from "react";
 
 interface Launch {
   id: string;
@@ -26,6 +25,7 @@ interface LaunchCardProps {
 
 export function LaunchCard({ launch }: LaunchCardProps) {
   const t = useTranslations("LaunchesPage");
+  const tCard = useTranslations("LaunchCard");
   const [expanded, setExpanded] = useState(false);
 
   const getStatusText = () => {
@@ -67,7 +67,7 @@ export function LaunchCard({ launch }: LaunchCardProps) {
                   href={launch.links.article_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 text-[#121212] dark:text-white"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
                 >
                   Article
                 </a>
@@ -77,7 +77,7 @@ export function LaunchCard({ launch }: LaunchCardProps) {
                   href={launch.links.wikipedia}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 text-[#121212] dark:text-white"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
                 >
                   Wikipedia
                 </a>
@@ -87,7 +87,7 @@ export function LaunchCard({ launch }: LaunchCardProps) {
                   href={launch.links.video_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 text-[#121212] dark:text-white"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
                 >
                   Video
                 </a>
@@ -103,7 +103,7 @@ export function LaunchCard({ launch }: LaunchCardProps) {
         type="button"
       >
         <span className="text-sm text-[#555555] dark:text-[#cccccc]">
-          {expanded ? "Less" : "More"}
+          {expanded ? tCard("less") : tCard("more")}
         </span>
         <ChevronDown
           className={`w-5 h-5 transition-transform duration-300 text-[#121212] dark:text-white ${expanded ? "rotate-180" : ""}`}

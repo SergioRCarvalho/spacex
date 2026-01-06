@@ -25,6 +25,10 @@ const messages = {
     home: "Início",
     launches: "Lançamentos",
   },
+  LaunchCard: {
+    more: "Mais",
+    less: "Menos",
+  },
 };
 
 export default messages;
