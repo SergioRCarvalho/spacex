@@ -24,10 +24,15 @@ const messages = {
     toggleMenu: "Toggle menu",
     home: "Home",
     launches: "Launches",
+    favorites: "Favorites",
   },
   LaunchCard: {
     more: "More",
     less: "Less",
+  },
+  FavoritesPage: {
+    title: "Favorites",
+    noFavorites: "No favorite launches yet.",
   },
 };
 

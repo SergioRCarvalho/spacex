@@ -72,6 +72,17 @@ export function Header() {
           <span className="absolute -top-6 left-0 right-0 h-0.5 bg-[#121212] dark:bg-white opacity-0 group-hover:opacity-100 transition-opacity" />
           {t("launches")}
         </Link>
+        <Link
+          className={`text-[12px] lg:text-[14px] tracking-[0.05em] uppercase transition-opacity relative group ${
+            isActive("/favorites")
+              ? "text-[#121212] dark:text-white font-medium"
+              : "text-[#555555] dark:text-[#7f7f7f] font-normal hover:opacity-80"
+          }`}
+          href="/favorites"
+        >
+          <span className="absolute -top-6 left-0 right-0 h-0.5 bg-[#121212] dark:bg-white opacity-0 group-hover:opacity-100 transition-opacity" />
+          {t("favorites")}
+        </Link>
         <button
           aria-label={t("toggleTheme")}
           className="p-1.5 rounded-full hover:bg-[#f5f5f5] dark:hover:bg-[#323232] transition-colors"
@@ -132,6 +143,17 @@ export function Header() {
             onClick={() => setMobileMenuOpen(false)}
           >
             {t("launches")}
+          </Link>
+          <Link
+            className={`text-[13px] tracking-[0.05em] uppercase transition-opacity ${
+              isActive("/favorites")
+                ? "text-[#121212] dark:text-white font-medium"
+                : "text-[#555555] dark:text-[#7f7f7f] font-normal hover:opacity-80"
+            }`}
+            href="/favorites"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t("favorites")}
           </Link>
         </div>
       )}

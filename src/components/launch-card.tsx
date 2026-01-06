@@ -1,4 +1,4 @@
-import { ChevronDown} from "lucide-react";
+import { ChevronDown, Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -27,6 +27,14 @@ export function LaunchCard({ launch }: LaunchCardProps) {
   const t = useTranslations("LaunchesPage");
   const tCard = useTranslations("LaunchCard");
   const [expanded, setExpanded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      return favorites.some((fav: Launch) => fav.id === launch.id);
+    }
+    return false;
+  });
+  const [animating, setAnimating] = useState(false);
 
   const getStatusText = () => {
     if (launch.launch_success === true) return t("success");
@@ -34,65 +42,96 @@ export function LaunchCard({ launch }: LaunchCardProps) {
     return t("unknown");
   };
 
+  const handleToggleFavorite = () => {
+    setAnimating(true);
+    const newIsFavorite = !isFavorite;
+    setIsFavorite(newIsFavorite);
+
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    if (newIsFavorite) {
+      if (!favorites.some((fav: Launch) => fav.id === launch.id)) {
+        favorites.push(launch);
+      }
+    } else {
+      const index = favorites.findIndex((fav: Launch) => fav.id === launch.id);
+      if (index > -1) favorites.splice(index, 1);
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    window.dispatchEvent(new CustomEvent('favoritesChanged'));
+
+    setTimeout(() => setAnimating(false), 600);
+  };
+
   return (
     <div className="bg-white dark:bg-[#121212] border border-[#e3e3e3] dark:border-[#323232] rounded-lg p-6 shadow-sm flex flex-col relative pb-20">
-      <div className="flex-1">
-        <h3 className="text-lg font-semibold mb-2 text-[#121212] dark:text-white">
-          {launch.mission_name}
-        </h3>
-        <p className="text-sm text-[#555555] dark:text-[#cccccc] mb-2">
-          {t("date")} {new Date(launch.launch_date_utc).toLocaleDateString()}
-        </p>
-        <p className="text-sm text-[#555555] dark:text-[#cccccc] mb-2">
-          {t("rocket")} {launch.rocket.rocket_name}
-        </p>
-        <p className="text-sm text-[#555555] dark:text-[#cccccc] mb-4">
-          {t("status")} {getStatusText()}
-        </p>
-
-        <div
-          className={`overflow-hidden transition-all duration-500 ${
-            expanded ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-          }`}
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold mb-2 text-[#121212] dark:text-white">
+            {launch.mission_name}
+          </h3>
+          <p className="text-sm text-[#555555] dark:text-[#cccccc] mb-2">
+            {t("date")} {new Date(launch.launch_date_utc).toLocaleDateString()}
+          </p>
+          <p className="text-sm text-[#555555] dark:text-[#cccccc] mb-2">
+            {t("rocket")} {launch.rocket.rocket_name}
+          </p>
+          <p className="text-sm text-[#555555] dark:text-[#cccccc] mb-4">
+            {t("status")} {getStatusText()}
+          </p>
+        </div>
+        <button
+          className={`p-0 hover:scale-110 transition-transform relative cursor-pointer ${animating ? 'animate-ping' : ''}`}
+          onClick={handleToggleFavorite}
+          type="button"
         >
-          <div className="mt-4">
-            {launch.details && (
-              <p className="text-sm mb-4 text-[#555555] dark:text-[#cccccc]">
-                {launch.details}
-              </p>
+          <Heart
+            className={`w-6 h-6 ${isFavorite ? 'fill-[#e53939] stroke-[#e53939]' : 'stroke-[#7f7f7f] dark:stroke-[#7f7f7f]'}`}
+          />
+        </button>
+      </div>
+
+      <div
+        className={`overflow-hidden transition-all duration-500 ${
+          expanded ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="mt-4">
+          {launch.details && (
+            <p className="text-sm mb-4 text-[#555555] dark:text-[#cccccc]">
+              {launch.details}
+            </p>
+          )}
+          <div className="flex gap-2">
+            {launch.links.article_link && (
+              <a
+                href={launch.links.article_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
+              >
+                Article
+              </a>
             )}
-            <div className="flex gap-2">
-              {launch.links.article_link && (
-                <a
-                  href={launch.links.article_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
-                >
-                  Article
-                </a>
-              )}
-              {launch.links.wikipedia && (
-                <a
-                  href={launch.links.wikipedia}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
-                >
-                  Wikipedia
-                </a>
-              )}
-              {launch.links.video_link && (
-                <a
-                  href={launch.links.video_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
-                >
-                  Video
-                </a>
-              )}
-            </div>
+            {launch.links.wikipedia && (
+              <a
+                href={launch.links.wikipedia}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
+              >
+                Wikipedia
+              </a>
+            )}
+            {launch.links.video_link && (
+              <a
+                href={launch.links.video_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-[#121212] dark:text-white"
+              >
+                Video
+              </a>
+            )}
           </div>
         </div>
       </div>
