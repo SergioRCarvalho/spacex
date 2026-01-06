@@ -122,7 +122,7 @@ export function Header() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           type="button"
         >
-          <Menu className="w-5 h-5" />
+          <Menu className="w-5 h-5 text-[#555555] dark:text-[#7f7f7f]" />
         </button>
       </div>
 
