@@ -10,6 +10,21 @@ const messages = {
     title: "SpaceX Launches Portal",
     description: "Portal for SpaceX launches built with Next.js",
   },
+  LaunchesPage: {
+    title: "Launches",
+    date: "Date:",
+    rocket: "Rocket:",
+    status: "Status:",
+    success: "Success",
+    failure: "Failure",
+    unknown: "Unknown",
+  },
+  Header: {
+    toggleTheme: "Toggle theme",
+    toggleMenu: "Toggle menu",
+    home: "Home",
+    launches: "Launches",
+  },
 };
 
 export default messages;
