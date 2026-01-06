@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpaceX Launches Portal
+
+A Next.js application for exploring SpaceX mission launches with search functionality.
+
+## Features
+
+- Browse SpaceX launches with infinite scroll
+- Search launches by mission or rocket name
+- Favorite launches for quick access
+- Dark/light theme support
+- Responsive design
+- Internationalization (English/Portuguese)
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- Apollo Client (GraphQL)
+- shadcn/ui components
+- Vitest for testing
+- Playwright for E2E testing
+- Storybook 10
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+, recommend 22
+- Docker (optional)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Application
+
+#### Development
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Production Build
+```bash
+npm run build
+npm start
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Docker
+```bash
+docker-compose up
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Testing
 
-## Learn More
+#### Unit Tests
+```bash
+npm test
+```
 
-To learn more about Next.js, take a look at the following resources:
+#### E2E Tests
+```bash
+npm run storybook
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Linting
+```bash
+npm run lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/` - Next.js app router pages
+- `src/components/` - React components
+- `src/lib/` - Utilities and API clients
+- `src/i18n/` - Internationalization
+- `messages/` - Translation files
