@@ -8,23 +8,7 @@ import { LaunchCard } from "@/components/launch-card";
 import { SearchInput } from "@/components/search-input";
 import client from "@/lib/apollo-client";
 import { GET_LAUNCHES } from "@/lib/queries";
-
-interface Launch {
-  id: string;
-  mission_name: string;
-  launch_date_utc: string;
-  launch_success: boolean | null;
-  details: string | null;
-  rocket: {
-    rocket_name: string;
-  };
-  links: {
-    mission_patch: string | null;
-    article_link: string | null;
-    wikipedia: string | null;
-    video_link: string | null;
-  };
-}
+import { filterLaunches, type Launch } from "@/lib/search";
 
 interface GetLaunchesData {
   launches: Launch[];
@@ -83,16 +67,9 @@ export default function LaunchesPage() {
   }, [loading, hasMore, fetchLaunches, search]);
 
   useEffect(() => {
-    if (search) {
-      const filtered = allLaunches.filter(
-        (l) =>
-          l.mission_name.toLowerCase().includes(search.toLowerCase()) ||
-          l.rocket.rocket_name.toLowerCase().includes(search.toLowerCase()),
-      );
-      setDisplayedLaunches(filtered);
-    } else {
-      setDisplayedLaunches(launches);
-    }
+    setDisplayedLaunches(
+      filterLaunches(search ? allLaunches : launches, search),
+    );
   }, [search, allLaunches, launches]);
 
   const sentinelRef = useRef<HTMLDivElement>(null);

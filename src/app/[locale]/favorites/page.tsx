@@ -5,23 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Header } from "@/components/header";
 import { LaunchCard } from "@/components/launch-card";
 import { SearchInput } from "@/components/search-input";
-
-interface Launch {
-  id: string;
-  mission_name: string;
-  launch_date_utc: string;
-  launch_success: boolean | null;
-  details: string | null;
-  rocket: {
-    rocket_name: string;
-  };
-  links: {
-    mission_patch: string | null;
-    article_link: string | null;
-    wikipedia: string | null;
-    video_link: string | null;
-  };
-}
+import { filterLaunches, type Launch } from "@/lib/search";
 
 export default function FavoritesPage() {
   const t = useTranslations("FavoritesPage");
@@ -50,16 +34,7 @@ export default function FavoritesPage() {
   }, [updateFavorites]);
 
   useEffect(() => {
-    if (search) {
-      const filtered = launches.filter(
-        (l) =>
-          l.mission_name.toLowerCase().includes(search.toLowerCase()) ||
-          l.rocket.rocket_name.toLowerCase().includes(search.toLowerCase()),
-      );
-      setDisplayedLaunches(filtered);
-    } else {
-      setDisplayedLaunches(launches);
-    }
+    setDisplayedLaunches(filterLaunches(launches, search));
   }, [search, launches]);
 
   return (
