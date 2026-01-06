@@ -27,7 +27,7 @@ export default function FavoritesPage() {
   const [launches, setLaunches] = useState<Launch[]>([]);
 
   const updateFavorites = useCallback(() => {
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
     setLaunches(favorites);
   }, []);
 
@@ -38,10 +38,10 @@ export default function FavoritesPage() {
       updateFavorites();
     };
 
-    window.addEventListener('favoritesChanged', handleFavoritesChange);
+    window.addEventListener("favoritesChanged", handleFavoritesChange);
 
     return () => {
-      window.removeEventListener('favoritesChanged', handleFavoritesChange);
+      window.removeEventListener("favoritesChanged", handleFavoritesChange);
     };
   }, [updateFavorites]);
 
@@ -50,10 +50,6 @@ export default function FavoritesPage() {
       <Header />
 
       <main className="flex-1 px-5.5 md:px-15 lg:px-24 py-12">
-        <h1 className="text-3xl font-bold mb-8 text-[#121212] dark:text-white">
-          {t("title")}
-        </h1>
-
         {launches.length === 0 ? (
           <p className="text-center text-[#555555] dark:text-[#cccccc]">
             {t("noFavorites")}
